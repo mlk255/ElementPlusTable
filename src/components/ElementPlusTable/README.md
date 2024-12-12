@@ -1,8 +1,13 @@
 ### ElementPlus 通用列表和表单，列表包含增、删、改、查、导出、分页等功能，表单通过配置项就可以实现大部分的提交，极大提升开发效率。
 
-> 库依赖 vue3 + elementPlus
+> 库依赖 vue3 + elementPlus ^v2.8.8
 
-
+## 安装（建议）,全局安装可以使用指令权限 v-auth
+```js
+//main.ts
+import CommonTable from "@/components/ElementPlusTable/index.ts";
+app.use(CommonTable);
+```
 
 ## 通用列表 CommonTable
 

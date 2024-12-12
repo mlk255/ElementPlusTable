@@ -269,7 +269,7 @@ interface uploadType {
 ```
 
 ### 查看所有配置的默认值
-src/components/ElementPlusTable/state.ts
+src/components/ElementPlusTable/js/option.ts
 
 ### 示例文件 
 src/views/test.vue

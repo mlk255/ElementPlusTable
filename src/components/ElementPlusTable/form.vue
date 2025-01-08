@@ -94,7 +94,7 @@ const props = withDefaults(defineProps<propsType>(), {
   model: Object.create({}),
   options: () => ({}),
 });
-const emits = defineEmits(["finish", "reset"]);
+const emits = defineEmits(["finish", "reset",'change']);
 
 const options = computed((): formOptionsType => {
   return <formOptionsType>{
@@ -198,6 +198,7 @@ const changeHandle = (dataIndex: string, newValue: any) => {
   const column = searchDataArr.value.find(
     (item) => item.dataIndex == dataIndex
   );
+  emits('change', searchDataArrSource.value, formData)
   column?.onChange && column?.onChange(newValue, formData);
 };
 

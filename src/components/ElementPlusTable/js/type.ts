@@ -134,7 +134,8 @@ export interface optionsType {
   beforeAdd?: (params: any) => void; //新增提交前
   beforeEdit?: (params: any) => void; //编辑提交前
   modelType?: "drawer" | "dialog"; // 弹窗类型
-  openHandle?: (type: 0 | 1) => void; // 打开新增编辑弹窗的回调 type: 0新增 1编辑
+  openBefore?: (type: 0 | 1) => void; // 打开新增编辑弹窗的回调 type: 0新增 1编辑
+  openAfter?: (type: 0 | 1) => void;
   tableExpandAll?: boolean;
   showTableTool?: boolean;
   showSearch?: boolean;
@@ -184,6 +185,7 @@ export interface columnsType {
     prop: { children: string; label: string }; //树组件的取值key，默认 children和name
     pk: string; //v-model的取值ky, 默认id
   };
+  controlShowFn?: (row:any) => boolean; // 打开弹窗和表单项change时执行，控制显示表单项
 }
 
 export interface pageResponseType {

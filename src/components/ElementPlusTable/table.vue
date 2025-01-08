@@ -150,6 +150,7 @@
         :options="formOptions"
         :model="formData"
         @finish="submitHandle"
+        @change="formChangeHandle"
       >
         <template
           v-for="slotname in formSlots"
@@ -352,7 +353,7 @@ const getAddColumns = () => {
 };
 
 const getEditColumns = () => {
-  return props.columns.map((item) => ({
+  return props.columns.map((item:any) => ({
     ...item,
     hide: !item.editDisplay,
     disabled: item.editDisabled,
@@ -360,6 +361,14 @@ const getEditColumns = () => {
     required: item.editRequired ?? item.required,
   }));
 };
+
+const formChangeHandle = (columns:columnsType[], formdata:any) => {
+  columns.forEach(item => {
+    if(item.controlShowFn){
+      formRef.value?.setColumn(item.dataIndex,'hide',!item.controlShowFn(formdata))
+    }
+  })
+}
 
 /**
  *
@@ -369,6 +378,18 @@ const getEditColumns = () => {
 const openHandle = (type: number, data?: any) => {
   // debugger;
   formColumns.value = [getAddColumns, getEditColumns][type]();
+  let _data = {...data}
+  if(type === 0){
+    formColumns.value.forEach((item:any) =>{
+      if(item.defaultValue)_data[item.dataIndex] = item.defaultValue
+    })
+  }
+  formColumns.value.forEach((item:any) => {
+    if(item.controlShowFn){
+      formRef.value?.setColumn(item.dataIndex,'hide',!item.controlShowFn(_data))
+    }
+  })
+  options.value.openBefore && options.value.openBefore(type);
   if (type === 1) {
     Object.assign(formData, data);
   } else {
@@ -380,7 +401,7 @@ const openHandle = (type: number, data?: any) => {
   }
   openType.value = type;
   open.value = true;
-  options.value.openHandle && options.value.openHandle(type);
+  options.value.openAfter && options.value.openAfter(type);
 };
 
 const submitHandle = async (formData: any) => {
